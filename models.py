@@ -17,26 +17,54 @@ db = SQLAlchemy()
 
 class Users(db.Model):
     id = db.Column(db.String, primary_key=True)
-    location = db.Column(db.String, nullable=True, default="")
-    saved_1 = db.Column(db.String, nullable=True, default="")
-    saved_2 = db.Column(db.String, nullable=True, default="")
-    saved_3 = db.Column(db.String, nullable=True, default="")
+    location_id = db.Column(db.String, nullable=True, default="")
+    saved_1_id = db.Column(db.String, nullable=True, default="")
+    saved_2_id = db.Column(db.String, nullable=True, default="")
+    saved_3_id = db.Column(db.String, nullable=True, default="")
     
-    def __init__(self, id, location, saved_1='', saved_2='', saved_3=''):
+    def __init__(self, id, location_id, saved_1_id='', saved_2_id='', saved_3_id=''):
         self.id = id
-        self.location = location
-        self.saved_1 = saved_1
-        self.saved_2 = saved_2
-        self.saved_3 = saved_3
+        self.location_id = location_id
+        self.saved_1_id = saved_1_id
+        self.saved_2_id = saved_2_id
+        self.saved_3_id = saved_3_id
         
     def __repr__(self):
         return f"User {self.id} has been added to the database"
+
+class UserLocation(db.Model):
+    user_location_id = db.Column(db.String, primary_key=True)
+    user_id = db.Column(db.String, nullable=False)
+    city = db.Column(db.String, nullable=False)
+    state = db.Column(db.String, nullable=False)
+    grid_id = db.Column(db.String, nullable=False)
+    grid_x = db.Column(db.Float, nullable=False)
+    grid_y = db.Column(db.Float, nullable=False)
     
+    def __init__(self, user_id, city, state, grid_id, grid_x, grid_y):
+        self.user_location_id = self.set_id()
+        self.user_id = user_id
+        self.city = city
+        self.state = state
+        self.grid_id = grid_id
+        self.grid_x = grid_x
+        self.grid_y = grid_y
+        
+    def set_id(self):
+        return str(uuid4())
+    
+    def __repr__(self):
+        return f"User Location has been added to the database"
+
 class UserSchema(ma.Schema):
     class Meta:
-        fields = ['id', 'location', 'saved_1', 'saved_2', 'saved_3']
-        
-        
+        fields = ['id', 'location_id', 'saved_1_id', 'saved_2_id', 'saved_3_id']
+
+class UserLocationSchema(ma.Schema):
+    class Meta:
+        fields = ['city', 'state', 'grid_id', 'grid_x', 'grid_y']        
+
 user_schema = UserSchema()
 users_schema = UserSchema(many=True)
+user_location_schema = UserLocationSchema()
     

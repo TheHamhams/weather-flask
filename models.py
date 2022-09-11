@@ -56,15 +56,89 @@ class UserLocation(db.Model):
     def __repr__(self):
         return f"User Location has been added to the database"
 
+class SavedOneLocation(db.Model):
+    saved_1_location_id = db.Column(db.String, primary_key=True)
+    user_id = db.Column(db.String, nullable=False)
+    city = db.Column(db.String, nullable=False)
+    state = db.Column(db.String, nullable=False)
+    grid_id = db.Column(db.String, nullable=False)
+    grid_x = db.Column(db.Float, nullable=False)
+    grid_y = db.Column(db.Float, nullable=False)
+    
+    def __init__(self, user_id, city, state, grid_id, grid_x, grid_y):
+        self.saved_1_location_id = self.set_id()
+        self.user_id = user_id
+        self.city = city
+        self.state = state
+        self.grid_id = grid_id
+        self.grid_x = grid_x
+        self.grid_y = grid_y
+        
+    def set_id(self):
+        return str(uuid4())
+    
+    def __repr__(self):
+        return f"Saved 1 Location has been added to the database"
+    
+class SavedTwoLocation(db.Model):
+    saved_2_location_id = db.Column(db.String, primary_key=True)
+    user_id = db.Column(db.String, nullable=False)
+    city = db.Column(db.String, nullable=False)
+    state = db.Column(db.String, nullable=False)
+    grid_id = db.Column(db.String, nullable=False)
+    grid_x = db.Column(db.Float, nullable=False)
+    grid_y = db.Column(db.Float, nullable=False)
+    
+    def __init__(self, user_id, city, state, grid_id, grid_x, grid_y):
+        self.saved_2_location_id = self.set_id()
+        self.user_id = user_id
+        self.city = city
+        self.state = state
+        self.grid_id = grid_id
+        self.grid_x = grid_x
+        self.grid_y = grid_y
+        
+    def set_id(self):
+        return str(uuid4())
+    
+    def __repr__(self):
+        return f"Saved 2 Location has been added to the database"
+        
+class SavedThreeLocation(db.Model):
+    saved_3_location_id = db.Column(db.String, primary_key=True)
+    user_id = db.Column(db.String, nullable=False)
+    city = db.Column(db.String, nullable=False)
+    state = db.Column(db.String, nullable=False)
+    grid_id = db.Column(db.String, nullable=False)
+    grid_x = db.Column(db.Float, nullable=False)
+    grid_y = db.Column(db.Float, nullable=False)
+    
+    def __init__(self, user_id, city, state, grid_id, grid_x, grid_y):
+        self.saved_3_location_id = self.set_id()
+        self.user_id = user_id
+        self.city = city
+        self.state = state
+        self.grid_id = grid_id
+        self.grid_x = grid_x
+        self.grid_y = grid_y
+        
+    def set_id(self):
+        return str(uuid4())
+    
+    def __repr__(self):
+        return f"Saved 3 Location has been added to the database"
+
 class UserSchema(ma.Schema):
     class Meta:
         fields = ['id', 'location_id', 'saved_1_id', 'saved_2_id', 'saved_3_id']
 
-class UserLocationSchema(ma.Schema):
+class LocationSchema(ma.Schema):
     class Meta:
-        fields = ['city', 'state', 'grid_id', 'grid_x', 'grid_y']        
+        fields = ['city', 'state', 'grid_id', 'grid_x', 'grid_y']  
+        
+              
 
 user_schema = UserSchema()
 users_schema = UserSchema(many=True)
-user_location_schema = UserLocationSchema()
+location_schema = LocationSchema()
     

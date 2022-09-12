@@ -64,7 +64,7 @@ def saved_forecast(num, id):
         
     forecast_request = requests.get(f'{baseWeatherGovForecast}{saved.grid_id}/{saved.grid_x},{saved.grid_y}/forecast')
     forecast_json = forecast_request.json()
-    
+
     forecast = forecast_json['properties']['periods'][0]
     
     return forecast
@@ -89,6 +89,7 @@ def get_profile(current_user_token, id):
     profile = UserLocation.query.filter_by(user_id = id).first()
 
     response = location_schema.dump(profile)
+    
     return jsonify(response)
 
 # POST
@@ -155,7 +156,7 @@ def update_user_location(current_user_token, id):
     return jsonify(response)
 
 @api.route('/saved/<num>/<id>', methods=['PUT'])
-def update_saved_location(num, id):
+def update_saved_location( num, id):
     city = request.json['city']
     state = request.json['state']
     location = ''
@@ -178,5 +179,6 @@ def update_saved_location(num, id):
     db.session.commit()
     
     response = location_schema.dump(location)
+
     return jsonify(response)
     

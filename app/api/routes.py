@@ -30,6 +30,10 @@ def get_grid_points(city, state):
 
 # GET
 
+@api.route('/')
+def greeting():
+    return {"message": "Welcome!"}
+
 @api.route('/user', methods=['GET'])
 @user_token_required
 def get_user(current_user_token):

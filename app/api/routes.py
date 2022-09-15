@@ -30,9 +30,16 @@ def get_grid_points(city, state):
 
 # GET
 
-@api.route('/')
+@api.route('/', methods=['GET'])
 def greeting():
-    return {"message": "Welcome!"}
+    forecast_request = requests.get(f'{baseWeatherGovForecast}SEW/131,84/forecast')
+    forecast_json = forecast_request.json()
+  
+    forecast = forecast_json['properties']['periods'][0]
+    
+    return forecast
+    
+    
 
 @api.route('/user', methods=['GET'])
 @user_token_required
